@@ -22,15 +22,6 @@ static const uint8_t SCK = 17;
 #define BAD_TX SERIAL_TX
 #define USB_as_HID 1
 
-// #define BTN_ALIAS "\"OK\""
-// #define HAS_5_BUTTONS
-// #define SEL_BTN 0
-// #define UP_BTN 41
-// #define DW_BTN 40
-// #define R_BTN 38
-// #define L_BTN 39
-// #define BTN_ACT LOW
-
 // Encoder
 #define HAS_ENCODER
 #define ENCODER_INA 40
@@ -100,10 +91,8 @@ static const uint8_t SCK = 17;
 #define SPI_MISO_PIN 16
 #define SPI_SS_PIN 43
 
-
 // === I2C Grove ===
 #define GROVE_SDA SDA
 #define GROVE_SCL SCL
-
 
 #endif /* Pins_Arduino_h */
