@@ -7,7 +7,6 @@
 #include <soc/soc_caps.h>
 
 #include <RotaryEncoder.h>
-// extern RotaryEncoder encoder;
 extern RotaryEncoder *encoder;
 IRAM_ATTR void checkPosition();
 
@@ -17,15 +16,12 @@ IRAM_ATTR void checkPosition();
 ** Description:   initial setup for the device
 ***************************************************************************************/
 
-// Power handler for battery detection
 #include <Wire.h>
-//#include <XPowersLib.h>
-//XPowersPPM PPM;
 
 void _setup_gpio() {
 
     pinMode(SEL_BTN, INPUT_PULLUP); // Sets the power btn as an INPUT
-    //pinMode(BK_BTN, INPUT);
+    
 
     pinMode(CC1101_SS_PIN, OUTPUT);
     pinMode(NRF24_SS_PIN, OUTPUT);
