@@ -1,8 +1,8 @@
 Files for my config for esp32_1732S019 with Bruce firmware v1.10.2, i used smoochie-board configuration with pins adapted for esp32_1732S019 with rotary encoder
 For my usage No mic, no GPS, no NRF24 used.
 
-place folder esp32_1732S019 to Bruce Folder boards/, and
-json file place to boards/_boards_json/
+With VSCODE, to place folder esp32_1732S019 to Bruce Folder: boards/, and
+json file place to Bruce Folder: boards/_boards_json/
 
 
 ![IMG_0121](https://github.com/user-attachments/assets/fa80bf96-9ce3-489e-8dbd-7436c7b9d8bb)
