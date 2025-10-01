@@ -4,8 +4,8 @@
 #include "soc/soc_caps.h"
 #include <stdint.h>
 
-static const uint8_t TX = 43;
-static const uint8_t RX = 44;
+static const uint8_t TX = -1; //43
+static const uint8_t RX = -1; //44
 
 static const uint8_t SDA = 47;
 static const uint8_t SCL = 48;
@@ -16,8 +16,8 @@ static const uint8_t MOSI = 15;
 static const uint8_t MISO = 16;
 static const uint8_t SCK = 17;
 
-#define SERIAL_RX 2
-#define SERIAL_TX 1
+#define SERIAL_RX -1 //2
+#define SERIAL_TX -1 //1
 #define BAD_RX SERIAL_RX
 #define BAD_TX SERIAL_TX
 #define USB_as_HID 1
@@ -41,7 +41,7 @@ static const uint8_t SCK = 17;
 #define SEL_BTN ENCODER_KEY
 #define UP_BTN -1
 #define DW_BTN -1
-// #define BK_BTN 38
+#define BK_BTN 19
 #define BTN_ACT LOW
 
 #define RXLED 4
@@ -58,8 +58,8 @@ static const uint8_t SCK = 17;
 #define CC1101_MISO_PIN SPI_MISO_PIN
 
 #define USE_NRF24_VIA_SPI
-#define NRF24_CE_PIN 18
-#define NRF24_SS_PIN 19
+#define NRF24_CE_PIN -1
+#define NRF24_SS_PIN -1
 #define NRF24_MOSI_PIN SPI_MOSI_PIN
 #define NRF24_SCK_PIN SPI_SCK_PIN
 #define NRF24_MISO_PIN SPI_MISO_PIN
@@ -90,10 +90,10 @@ static const uint8_t SCK = 17;
 #define SPI_FREQUENCY 40000000
 #define SPI_READ_FREQUENCY 20000000
 
-#define SDCARD_CS 21
-#define SDCARD_SCK 17
-#define SDCARD_MISO 16
-#define SDCARD_MOSI 15
+#define SDCARD_CS -1  //21
+#define SDCARD_SCK -1 //17
+#define SDCARD_MISO -1 //16
+#define SDCARD_MOSI -1 //15
 
 #define SPI_SCK_PIN 17
 #define SPI_MOSI_PIN 15
