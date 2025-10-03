@@ -34,7 +34,8 @@ void _setup_gpio() {
     bruceConfig.irRx = RXLED;
     Wire.setPins(GROVE_SDA, GROVE_SCL);
     Wire.begin();
-
+    
+    pinMode(BK_BTN, INPUT_PULLUP);
     pinMode(ENCODER_KEY, INPUT);
     // use TWO03 mode when PIN_IN1, PIN_IN2 signals are both LOW or HIGH in latch position.
     encoder = new RotaryEncoder(ENCODER_INA, ENCODER_INB, RotaryEncoder::LatchMode::FOUR3);
@@ -76,60 +77,41 @@ IRAM_ATTR void checkPosition() {
 ** Handles the variables PrevPress, NextPress, SelPress, AnyKeyPress and EscPress
 **********************************************************************/
 void InputHandler(void) {
-    static unsigned long lastBtnPress = 0;
-    static bool isBtnPressed = false;
-    static unsigned long tm2 = millis();
+    static unsigned long tm = 0;
+    if (millis() - tm < 200 && !LongPress) return;
 
-    static int _last_dir = 0;
-    static bool waitingSecondClick = false;
-    static unsigned long firstClickTime = 0;
+    // lecture boutons
+    bool _s = digitalRead(SEL_BTN);  // bouton central
+    bool _e = digitalRead(BK_BTN);   // bouton ESC
 
-    bool selRaw = digitalRead(SEL_BTN) == BTN_ACT;
+    // lecture encodeur (direction)
+    int dir = encoder ? (int)encoder->getDirection() : 0;
 
-    // Gestion rotation encodeur
-    _last_dir = (int)encoder->getDirection();
-    if (_last_dir != 0) {
+    // si une action est détectée (bouton ou encodeur)
+    if (!_s || !_e || dir != 0) {
+        tm = millis();
         if (!wakeUpScreen()) {
-            AnyKeyPress = true;
-            if (_last_dir > 0) PrevPress = true;
-            if (_last_dir < 0) NextPress = true;
-            _last_dir = 0;
-            tm2 = millis();
+            AnyKeyPress = true; // juste réveil
+        } else {
+            return; // si réveil → on sort, pas d’action
         }
     }
 
-    // Appui du bouton
-    if (selRaw && !isBtnPressed) {
-        lastBtnPress = millis();
-        isBtnPressed = true;
+    // gestion encodeur
+    if (dir > 0) {
+        PrevPress = true;
+    }
+    if (dir < 0) {
+        NextPress = true;
     }
 
-    // Relâchement
-    if (!selRaw && isBtnPressed) {
-        unsigned long pressDuration = millis() - lastBtnPress;
-
-        if (pressDuration >= 40 && pressDuration < 600) {
-            if (waitingSecondClick && millis() - firstClickTime < 250) {
-                EscPress = true;
-                AnyKeyPress = true;
-                waitingSecondClick = false;
-                Serial.println("Esc (double click)");
-            } else {
-                waitingSecondClick = true;
-                firstClickTime = millis();
-            }
-        }
-
-        isBtnPressed = false;
+    // gestion bouton Select
+    if (!_s) {
+        SelPress = true;
     }
 
-    // Si délai de second clic dépassé, c’était un simple clic
-    if (waitingSecondClick && (millis() - firstClickTime >= 250)) {
-        if (millis() - tm2 > 200) {
-            SelPress = true;
-            AnyKeyPress = true;
-            tm2 = millis();
-        }
-        waitingSecondClick = false;
+    // gestion bouton ESC
+    if (!_e) {
+        EscPress = true;
     }
 }
